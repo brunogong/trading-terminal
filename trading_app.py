@@ -14,7 +14,7 @@ import pytz
 # Configurazione pagina
 st.set_page_config(
     page_title="Trading Pro",
-    page_icon="??",
+    page_icon="📱",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
@@ -164,7 +164,7 @@ st.markdown("""
 # Header
 st.markdown("""
 <div class='main-title'>
-    <h1>?? TRADING TERMINAL PRO</h1>
+    <h1>📱 TRADING TERMINAL PRO</h1>
     <p>Analisi Multi-Asset in Tempo Reale</p>
 </div>
 """, unsafe_allow_html=True)
@@ -179,7 +179,7 @@ def get_sessions_html():
     }
     
     now = datetime.now(pytz.UTC)
-    html = "<div class='session-card'>?? "
+    html = "<div class='session-card'>🌍 "
     
     for city, zone in zones.items():
         tz = pytz.timezone(zone)
@@ -195,7 +195,7 @@ def get_sessions_html():
         else:
             is_open = 13 <= hour < 22
             
-        icon = '??' if is_open else '??'
+        icon = '🟢' if is_open else '🔴'
         html += f"{icon}{city} {local.strftime('%H:%M')}  "
     
     html += "</div>"
@@ -208,28 +208,28 @@ col1, col2 = st.columns(2)
 
 with col1:
     asset = st.selectbox(
-        "?? ASSET",
+        "📊 ASSET",
         ["XAU/USD (Oro)", "EUR/USD", "GBP/USD", "BTC/USD", "ETH/USD", "S&P 500"]
     )
 
 with col2:
     timeframe = st.selectbox(
-        "?? TIMEFRAME",
+        "⏱️ TIMEFRAME",
         ["1h", "4h", "1d"]
     )
 
 col1, col2 = st.columns(2)
 
 with col1:
-    capitale = st.number_input("?? Capitale (�)", value=1000, step=100)
+    capitale = st.number_input("💰 Capitale (€)", value=1000, step=100)
 
 with col2:
-    rischio = st.slider("?? Rischio %", 0.1, 5.0, 1.0, 0.1)
+    rischio = st.slider("⚠️ Rischio %", 0.1, 5.0, 1.0, 0.1)
 
 # Bottone analisi
-if st.button("?? ANALIZZA ORA", type="primary"):
+if st.button("🚀 ANALIZZA ORA", type="primary"):
     
-    with st.spinner("?? Scaricamento dati in corso..."):
+    with st.spinner("📥 Scaricamento dati in corso..."):
         
         try:
             # Mappa asset a simbolo Yahoo Finance
@@ -331,7 +331,7 @@ if st.button("?? ANALIZZA ORA", type="primary"):
                 with col1:
                     st.markdown(f"<div class='metric-card'><div class='metric-label'>LOTTI</div><div class='metric-value'>{lotti:.2f}</div></div>", unsafe_allow_html=True)
                 with col2:
-                    st.markdown(f"<div class='metric-card'><div class='metric-label'>RISCHIO �</div><div class='metric-value'>{actual_risk:.2f}</div></div>", unsafe_allow_html=True)
+                    st.markdown(f"<div class='metric-card'><div class='metric-label'>RISCHIO €</div><div class='metric-value'>{actual_risk:.2f}</div></div>", unsafe_allow_html=True)
                 with col3:
                     rr = abs((tp - entry) / (sl - entry)) if sl != entry else 0
                     st.markdown(f"<div class='metric-card'><div class='metric-label'>R/R</div><div class='metric-value'>{rr:.2f}</div></div>", unsafe_allow_html=True)
@@ -382,13 +382,13 @@ if st.button("?? ANALIZZA ORA", type="primary"):
                 # Footer
                 st.markdown(f"""
                 <div class='info-footer'>
-                    ?? Aggiornato: {datetime.now().strftime('%H:%M:%S')} | 
+                    📊 Aggiornato: {datetime.now().strftime('%H:%M:%S')} | 
                     Range: {low_20:.2f} - {high_20:.2f}
                 </div>
                 """, unsafe_allow_html=True)
                 
             else:
-                st.error("? Nessun dato disponibile")
+                st.error("❌ Nessun dato disponibile")
                 
         except Exception as e:
-            st.error(f"? Errore: {str(e)}")
+            st.error(f"❌ Errore: {str(e)}")
